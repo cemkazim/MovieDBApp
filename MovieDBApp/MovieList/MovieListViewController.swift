@@ -12,13 +12,7 @@ import UIKit
 
 final class MovieListViewController: UIViewController {
     
-    // MARK: - Public properties -
-    
-    var presenter: MovieListPresenterInterface!
-    
-    // MARK: - Private properties -
-    
-    private var searchCollectionView: UICollectionView = {
+    private var movieListCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.estimatedItemSize = CGSize(width: 200, height: 200)
         layout.scrollDirection = .vertical
@@ -30,14 +24,11 @@ final class MovieListViewController: UIViewController {
         return view
     }()
     
-    // MARK: - Lifecycle -
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupView()
     }
 }
-
-// MARK: - Extensions -
 
 extension MovieListViewController {
     
@@ -46,16 +37,41 @@ extension MovieListViewController {
         title = Constants.movieListTitle
         addSubviews()
         setupConstraints()
+        setupCollectionView()
     }
     
     private func addSubviews() {
-        
+        view.addSubview(movieListCollectionView)
     }
     
     private func setupConstraints() {
-        
+        NSLayoutConstraint.activate([
+            movieListCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            movieListCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            movieListCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            movieListCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
+    
+    private func setupCollectionView() {
+        movieListCollectionView.delegate = self
+        movieListCollectionView.dataSource = self
+        movieListCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: Constants.movieListCollectionViewCellID)
     }
 }
 
-extension MovieListViewController: MovieListViewInterface {
+extension MovieListViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.movieListCollectionViewCellID, for: indexPath) as? MovieListCollectionViewCell {
+            cell.setData(with: "Cemo", imageURL: URL(string: "https://image.tmdb.org/t/p/w185//2DyEk84XnbJEdPlGF43crxfdtHH.jpg"), indicator: .grayLarge)
+            return cell
+        } else {
+            return UICollectionViewCell()
+        }
+    }
 }
