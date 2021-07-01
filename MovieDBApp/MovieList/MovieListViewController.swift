@@ -56,7 +56,7 @@ extension MovieListViewController {
     private func setupCollectionView() {
         movieListCollectionView.delegate = self
         movieListCollectionView.dataSource = self
-        movieListCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: Constants.movieListCollectionViewCellID)
+        movieListCollectionView.register(MovieListCollectionViewCell.self, forCellWithReuseIdentifier: Constants.movieListCollectionViewCellID)
     }
 }
 
