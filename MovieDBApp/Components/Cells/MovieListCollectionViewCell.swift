@@ -12,10 +12,24 @@ class MovieListCollectionViewCell: UICollectionViewCell {
     
     private lazy var movieNameLabel: UILabel = {
         let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.numberOfLines = 2
+        label.textColor = .black
+        label.textAlignment = .left
         return label
     }()
     private lazy var movieImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+    private lazy var starImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = UIImage(imageLiteralResourceName: "star.png")
         return imageView
     }()
     
@@ -36,6 +50,7 @@ class MovieListCollectionViewCell: UICollectionViewCell {
     private func addSubviews() {
         addSubview(movieNameLabel)
         addSubview(movieImageView)
+        addSubview(starImageView)
     }
     
     private func setupConstraints() {
@@ -45,9 +60,14 @@ class MovieListCollectionViewCell: UICollectionViewCell {
             movieImageView.heightAnchor.constraint(equalToConstant: 150),
             movieImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             
-            movieImageView.topAnchor.constraint(equalTo: movieImageView.bottomAnchor, constant: 5),
-            movieImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            movieImageView.widthAnchor.constraint(equalToConstant: 150)
+            movieNameLabel.topAnchor.constraint(equalTo: movieImageView.bottomAnchor, constant: 10),
+            movieNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 25),
+            movieNameLabel.widthAnchor.constraint(equalToConstant: 100),
+            
+            starImageView.leadingAnchor.constraint(lessThanOrEqualTo: movieNameLabel.trailingAnchor, constant: 5),
+            starImageView.widthAnchor.constraint(equalToConstant: 20),
+            starImageView.heightAnchor.constraint(equalToConstant: 20),
+            starImageView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -5)
         ])
     }
 }
