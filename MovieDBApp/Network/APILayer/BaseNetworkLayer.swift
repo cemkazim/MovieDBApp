@@ -18,11 +18,11 @@ class BaseNetworkLayer {
     ///   - url: Formatted url for API data
     ///   - requestMethod: Any HTTPMethod
     ///   - onComplete: Pass the data with completion
-    func request<T: Decodable>(url: URL, requestMethod: String, onComplete: @escaping (Result<T, Error>) -> Void) {
+    func request<T: Decodable>(url: URL, requestMethod: HttpMethods, onComplete: @escaping RequestCompletion<T>) {
         var request = URLRequest(url: url)
-        request.httpMethod = requestMethod
+        request.httpMethod = requestMethod.rawValue
         let task = URLSession.shared
-        task.dataTask(with: url) { (data, response, error) in
+        task.dataTask(with: request) { (data, response, error) in
             guard let remoteData = data else { return }
             do {
                 let decodedData = try JSONDecoder().decode(T.self, from: remoteData)
@@ -30,6 +30,6 @@ class BaseNetworkLayer {
             } catch {
                 onComplete(.failure(error))
             }
-        }
+        }.resume()
     }
 }

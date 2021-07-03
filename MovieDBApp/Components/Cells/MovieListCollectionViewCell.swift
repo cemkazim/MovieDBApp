@@ -23,6 +23,7 @@ class MovieListCollectionViewCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
+        imageView.image = UIImage(imageLiteralResourceName: "placeholder_poster.png")
         return imageView
     }()
     private lazy var starImageView: UIImageView = {
