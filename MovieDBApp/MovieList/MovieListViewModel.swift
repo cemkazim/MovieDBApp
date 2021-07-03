@@ -24,4 +24,7 @@ class MovieListViewModel {
     init() {}
     
     // MARK: - Methods -
+    func getPopularMoviesData() {
+        // This method is written for data of the popular movie list from api.
+    }
 }
