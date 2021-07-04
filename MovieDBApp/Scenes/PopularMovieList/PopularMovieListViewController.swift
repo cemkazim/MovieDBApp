@@ -12,6 +12,8 @@ import UIKit
 
 final class PopularMovieListViewController: UIViewController {
     
+    // MARK: - Properties
+    
     private var movieListCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.estimatedItemSize = CGSize(width: 200, height: 200)
@@ -38,6 +40,8 @@ final class PopularMovieListViewController: UIViewController {
     private var movieList = [ResultModel]()
     private var starredMovieIdList = [Int]()
     
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
@@ -48,6 +52,8 @@ final class PopularMovieListViewController: UIViewController {
         getMovieData()
     }
     
+    // MARK: - Actions
+    
     @objc func loadMoreButtonClicked() {
         viewModel.increasePageCount()
         viewModel.getData()
@@ -57,6 +63,8 @@ final class PopularMovieListViewController: UIViewController {
 }
 
 extension PopularMovieListViewController {
+    
+    // MARK: - Methods
     
     private func setupView() {
         view.backgroundColor = .white
@@ -98,6 +106,8 @@ extension PopularMovieListViewController {
     }
 }
 
+// MARK: - PopularMovieListViewController: UICollectionViewDelegate, UICollectionViewDataSource
+
 extension PopularMovieListViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -131,6 +141,8 @@ extension PopularMovieListViewController: UICollectionViewDelegate, UICollection
         }
     }
 }
+
+// MARK: - PopularMovieListViewController: PopularMovieListViewModelDelegate
 
 extension PopularMovieListViewController: PopularMovieListViewModelDelegate {
     

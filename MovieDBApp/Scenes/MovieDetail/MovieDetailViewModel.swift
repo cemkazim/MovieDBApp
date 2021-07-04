@@ -11,20 +11,28 @@
 import UIKit
 import CoreData
 
+// MARK: - MovieDetailViewModelDelegate
+
 protocol MovieDetailViewModelDelegate: class {
     func getMovieDetail(with model: MovieDetailModel)
 }
 
 class MovieDetailViewModel {
     
+    // MARK: - Properties
+    
     weak var delegate: MovieDetailViewModelDelegate?
     private var coreDataHelper = CoreDataHelper()
     private var lastStarredMovieIdList = [Int]()
+    
+    // MARK: - Initializers
     
     init(movieId: Int? = nil, delegate: MovieDetailViewModelDelegate? = nil) {
         self.delegate = delegate
         getData(movieId: movieId)
     }
+    
+    // MARK: - Methods
     
     public func getData(movieId: Int?) {
         MovieDetailServiceLayer.shared.getMovieDetail(movieId: movieId ?? 0) { [weak self] (result) in

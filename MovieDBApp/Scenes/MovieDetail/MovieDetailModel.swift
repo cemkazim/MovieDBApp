@@ -10,6 +10,8 @@
 
 import Foundation
 
+// MARK: - MovieDetailModel
+
 public struct MovieDetailModel: Decodable {
     
     let originalTitle: String?

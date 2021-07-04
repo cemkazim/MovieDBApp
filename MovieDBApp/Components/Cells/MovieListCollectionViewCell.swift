@@ -10,6 +10,8 @@ import SDWebImage
 
 class PopularMovieListCollectionViewCell: UICollectionViewCell {
     
+    // MARK: - Properties
+    
     private lazy var movieNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -35,6 +37,8 @@ class PopularMovieListCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
+    // MARK: - Initializers
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -43,6 +47,8 @@ class PopularMovieListCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Methods
     
     private func setupView() {
         addSubviews()
@@ -73,6 +79,8 @@ class PopularMovieListCollectionViewCell: UICollectionViewCell {
         ])
     }
 }
+
+// MARK: - Extension: PopularMovieListCollectionViewCell
 
 extension PopularMovieListCollectionViewCell {
     

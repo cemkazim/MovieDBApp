@@ -11,6 +11,8 @@
 import UIKit
 import CoreData
 
+// MARK: - PopularMovieListViewModelDelegate
+
 protocol PopularMovieListViewModelDelegate: class {
     func getPopularMovie(with popularMovieList: [ResultModel])
     func getStarredMovie(with starredMovieIdList: [Int])
@@ -18,14 +20,20 @@ protocol PopularMovieListViewModelDelegate: class {
 
 class PopularMovieListViewModel {
     
+    // MARK: - Properties
+    
     private var pageCount = 1
     private var popularMovieList = [ResultModel]()
     private var starredMovieIdList = [Int]()
     weak var delegate: PopularMovieListViewModelDelegate?
     
+    // MARK: - Initializers
+    
     init(delegate: PopularMovieListViewModelDelegate? = nil) {
         self.delegate = delegate
     }
+    
+    // MARK: - Methods
     
     public func getData() {
         MovieListServiceLayer.shared.getPopularMovies(pageId: pageCount) { [weak self] (result) in

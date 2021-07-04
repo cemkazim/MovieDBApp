@@ -13,6 +13,8 @@ import SDWebImage
 
 class MovieDetailViewController: UIViewController {
     
+    // MARK: - Properties
+    
     private var scrollableStackView: ScrollableStackView = {
         let view = ScrollableStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -65,6 +67,8 @@ class MovieDetailViewController: UIViewController {
     public var isMovieStarred = false
     private lazy var viewModel = MovieDetailViewModel()
     
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
@@ -72,6 +76,8 @@ class MovieDetailViewController: UIViewController {
 }
 
 extension MovieDetailViewController {
+    
+    // MARK: - Methods
     
     private func setupView() {
         view.backgroundColor = .white
@@ -118,6 +124,8 @@ extension MovieDetailViewController {
         updateRightBarButton()
     }
 }
+
+// MARK: - MovieDetailViewController: MovieDetailViewModelDelegate
 
 extension MovieDetailViewController: MovieDetailViewModelDelegate {
     

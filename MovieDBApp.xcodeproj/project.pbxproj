@@ -96,12 +96,10 @@
 				00F4B3102690CB0B008ECF59 /* Network */,
 				00F4B2B0268E5667008ECF59 /* Components */,
 				00F4B292268E5103008ECF59 /* Utilities */,
-				00F4B26B268E4B7E008ECF59 /* AppDelegate.swift */,
-				00F4B26D268E4B7E008ECF59 /* SceneDelegate.swift */,
-				00F4B274268E4B81008ECF59 /* Assets.xcassets */,
-				00F4B276268E4B81008ECF59 /* LaunchScreen.storyboard */,
-				00FACCC52691E800003438F3 /* MovieDBAppDataModel.xcdatamodeld */,
+				00FACCD12692129E003438F3 /* Supporting Files */,
 				00F4B279268E4B81008ECF59 /* Info.plist */,
+				00F4B26D268E4B7E008ECF59 /* SceneDelegate.swift */,
+				00F4B26B268E4B7E008ECF59 /* AppDelegate.swift */,
 			);
 			path = MovieDBApp;
 			sourceTree = "<group>";
@@ -210,6 +208,16 @@
 				00FACCCB2691E86C003438F3 /* CoreDataHelper.swift */,
 			);
 			path = Helper;
+			sourceTree = "<group>";
+		};
+		00FACCD12692129E003438F3 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				00F4B276268E4B81008ECF59 /* LaunchScreen.storyboard */,
+				00FACCC52691E800003438F3 /* MovieDBAppDataModel.xcdatamodeld */,
+				00F4B274268E4B81008ECF59 /* Assets.xcassets */,
+			);
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		6A67E5A53BF8167CC7E85F94 /* Frameworks */ = {
