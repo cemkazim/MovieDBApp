@@ -22,7 +22,7 @@ class MovieDetailViewController: UIViewController {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
-        imageView.image = UIImage(imageLiteralResourceName: "placeholder_poster.png")
+        imageView.image = UIImage(imageLiteralResourceName: Constants.placeholderPosterImageName)
         return imageView
     }()
     private lazy var labelStackView: UIStackView = {
@@ -79,7 +79,7 @@ extension MovieDetailViewController {
         addSubviews()
         setupConstraints()
         viewModel = MovieDetailViewModel(movieId: selectedMovieId, delegate: self)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(imageLiteralResourceName: "star_empty.png"),
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(imageLiteralResourceName: Constants.starEmptyImageName),
                                                             style: .plain,
                                                             target: self,
                                                             action: #selector(rightBarButtonTapped))

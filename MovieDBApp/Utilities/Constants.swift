@@ -19,4 +19,7 @@ public struct Constants {
     static let starredMoviesEntityName = "StarredMovies"
     static let starFullImageName = "star_full.png"
     static let starEmptyImageName = "star_empty.png"
+    static let placeholderPosterImageName = "placeholder_poster.png"
+    static let movieIdKey = "movieId"
+    static let camptonMediumFontText = "Campton-Medium"
 }

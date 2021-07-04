@@ -79,7 +79,7 @@ class PopularMovieListViewModel {
             if let results = results as? [NSManagedObject] {
                 if results.count > 0 {
                     for result in results {
-                        guard let movieId = result.value(forKey: "movieId") as? Int else { return }
+                        guard let movieId = result.value(forKey: Constants.movieIdKey) as? Int else { return }
                         starredMovieIdList.append(movieId)
                     }
                 }

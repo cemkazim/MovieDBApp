@@ -30,7 +30,7 @@ final class PopularMovieListViewController: UIViewController {
         button.setTitle(Constants.loadMoreButtonText, for: .normal)
         button.addTarget(self, action: #selector(loadMoreButtonClicked), for: .touchUpInside)
         button.isHidden = true
-        button.titleLabel?.font = UIFont(name: "Campton-Medium", size: 12)
+        button.titleLabel?.font = UIFont(name: Constants.camptonMediumFontText, size: 12)
         button.titleLabel?.textColor = .white
         return button
     }()

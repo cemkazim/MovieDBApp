@@ -50,7 +50,7 @@ class MovieDetailViewModel {
     private func saveStarredMovieData(movieId: Int, isStarred: Bool) {
         let entity = coreDataHelper.addData(entityName: Constants.starredMoviesEntityName)
         let newValue = NSManagedObject(entity: entity, insertInto: CoreDataHelper.context)
-        newValue.setValue(movieId, forKey: "movieId")
+        newValue.setValue(movieId, forKey: Constants.movieIdKey)
         saveToCoreData(to: CoreDataHelper.context)
     }
     
@@ -77,7 +77,7 @@ class MovieDetailViewModel {
             if let results = results as? [NSManagedObject] {
                 if results.count > 0 {
                     for result in results {
-                        guard let movieId = result.value(forKey: "movieId") as? Int else { return }
+                        guard let movieId = result.value(forKey: Constants.movieIdKey) as? Int else { return }
                         lastStarredMovieIdList.append(movieId)
                     }
                 }
@@ -94,7 +94,7 @@ class MovieDetailViewModel {
               let starredMovies = results as? [NSManagedObject] else { return }
         do {
             for result in starredMovies {
-                if let movieId = result.value(forKey: "movieId") as? Int,
+                if let movieId = result.value(forKey: Constants.movieIdKey) as? Int,
                    lastStarredMovieIdList.contains(where: { $0 == movieId }),
                    let movieIdIndex = lastStarredMovieIdList.firstIndex(of: movieId) {
                     CoreDataHelper.context.delete(result)
