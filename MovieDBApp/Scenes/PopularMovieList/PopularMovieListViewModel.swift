@@ -11,7 +11,7 @@
 import Foundation
 
 protocol PopularMovieListViewModelDelegate: class {
-    func getResultModel(movies: [ResultModel])
+    func getPopularMovie(with list: [ResultModel])
 }
 
 class PopularMovieListViewModel {
@@ -20,7 +20,8 @@ class PopularMovieListViewModel {
     private var popularMovieList = [ResultModel]()
     weak var delegate: PopularMovieListViewModelDelegate?
     
-    init() {
+    init(delegate: PopularMovieListViewModelDelegate? = nil) {
+        self.delegate = delegate
         getData()
     }
     
@@ -39,12 +40,12 @@ class PopularMovieListViewModel {
     private func handlePopularMoviesData(_ response: PopularMovieListModel) {
         if let results = response.results {
             for result in results {
-                if let title = result.title, let imageURL = result.posterPath {
-                    let resultModel = ResultModel(title: title, posterPath: Constants.movieImageBaseURLPath + imageURL)
+                if let title = result.title, let imageURL = result.posterPath, let movieId = result.id {
+                    let resultModel = ResultModel(title: title, posterPath: Constants.movieImageBaseURLPath + imageURL, id: movieId)
                     popularMovieList.append(resultModel)
                 }
             }
-            delegate?.getResultModel(movies: popularMovieList)
+            delegate?.getPopularMovie(with: popularMovieList)
         }
     }
     

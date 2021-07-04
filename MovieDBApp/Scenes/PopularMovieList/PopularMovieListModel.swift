@@ -20,9 +20,10 @@ public struct ResultModel: Decodable {
     
     let title: String?
     let posterPath: String?
+    let id: Int?
     
     enum CodingKeys: String, CodingKey {
-        case title
+        case title, id
         case posterPath = "poster_path"
     }
 }

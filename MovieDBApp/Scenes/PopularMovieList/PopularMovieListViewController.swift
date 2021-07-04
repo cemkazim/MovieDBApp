@@ -27,14 +27,14 @@ final class PopularMovieListViewController: UIViewController {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .black
-        button.setTitle("Load More", for: .normal)
+        button.setTitle(Constants.loadMoreButtonText, for: .normal)
         button.addTarget(self, action: #selector(loadMoreButtonClicked), for: .touchUpInside)
         button.isHidden = true
         button.titleLabel?.font = UIFont(name: "Campton-Medium", size: 12)
         button.titleLabel?.textColor = .white
         return button
     }()
-    private var viewModel = PopularMovieListViewModel()
+    private lazy var viewModel = PopularMovieListViewModel()
     private var movieList = [ResultModel]()
     
     override func viewDidLoad() {
@@ -54,11 +54,11 @@ extension PopularMovieListViewController {
     
     private func setupView() {
         view.backgroundColor = .white
-        title = Constants.movieListTitle
-        viewModel.delegate = self
+        title = Constants.popularMovieListTitle
         addSubviews()
         setupConstraints()
         setupCollectionView()
+        viewModel = PopularMovieListViewModel(delegate: self)
     }
     
     private func addSubviews() {
@@ -83,7 +83,7 @@ extension PopularMovieListViewController {
     private func setupCollectionView() {
         movieListCollectionView.delegate = self
         movieListCollectionView.dataSource = self
-        movieListCollectionView.register(MovieListCollectionViewCell.self, forCellWithReuseIdentifier: Constants.movieListCollectionViewCellID)
+        movieListCollectionView.register(PopularMovieListCollectionViewCell.self, forCellWithReuseIdentifier: Constants.popularMovieListCollectionViewCellID)
     }
 }
 
@@ -94,7 +94,7 @@ extension PopularMovieListViewController: UICollectionViewDelegate, UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.movieListCollectionViewCellID, for: indexPath) as? MovieListCollectionViewCell {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.popularMovieListCollectionViewCellID, for: indexPath) as? PopularMovieListCollectionViewCell {
             let movieTitle = movieList[indexPath.row].title
             let movieImageURL = movieList[indexPath.row].posterPath
             cell.setData(with: movieTitle, imageURL: URL(string: movieImageURL ?? ""), indicator: .grayLarge)
@@ -111,14 +111,23 @@ extension PopularMovieListViewController: UICollectionViewDelegate, UICollection
             }
         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let movieId = movieList[indexPath.row].id {
+            let movieDetailViewController = MovieDetailViewController()
+            movieDetailViewController.selectedMovieId = movieId
+            navigationController?.pushViewController(movieDetailViewController, animated: true)
+        }
+    }
 }
 
 extension PopularMovieListViewController: PopularMovieListViewModelDelegate {
     
-    func getResultModel(movies: [ResultModel]) {
-        movieList = movies
+    func getPopularMovie(with list: [ResultModel]) {
+        print("called!")
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
+            self.movieList = list
             self.movieListCollectionView.reloadData()
         }
     }

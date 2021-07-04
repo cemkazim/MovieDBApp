@@ -1,5 +1,5 @@
 //
-//  MovieListCollectionViewCell.swift
+//  PopularMovieListCollectionViewCell.swift
 //  MovieDBApp
 //
 //  Created by Cem Kazım on 1.07.2021.
@@ -8,7 +8,7 @@
 import UIKit
 import SDWebImage
 
-class MovieListCollectionViewCell: UICollectionViewCell {
+class PopularMovieListCollectionViewCell: UICollectionViewCell {
     
     private lazy var movieNameLabel: UILabel = {
         let label = UILabel()
@@ -73,7 +73,7 @@ class MovieListCollectionViewCell: UICollectionViewCell {
     }
 }
 
-extension MovieListCollectionViewCell {
+extension PopularMovieListCollectionViewCell {
     
     public func setData(with nameText: String?, imageURL: URL?, indicator: SDWebImageActivityIndicator?) {
         movieNameLabel.text = nameText
