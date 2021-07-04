@@ -55,4 +55,8 @@ class PopularMovieListViewModel {
     public func getCurrentPageNumber() -> Int {
         return pageCount
     }
+    
+    public func getPageItemCount() -> Int {
+        return 20
+    }
 }

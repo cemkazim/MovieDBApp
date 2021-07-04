@@ -105,7 +105,7 @@ extension PopularMovieListViewController: UICollectionViewDelegate, UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if movieList.count == 20 * viewModel.getCurrentPageNumber() {
+        if movieList.count == viewModel.getPageItemCount() * viewModel.getCurrentPageNumber() {
             if indexPath.row == movieList.count - 1 {
                 loadMoreButton.isHidden = false
             }
