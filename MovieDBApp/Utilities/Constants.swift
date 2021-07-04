@@ -16,4 +16,5 @@ public struct Constants {
     static let movieNameText = "Name: "
     static let movieVoteCountText = "Vote Count: "
     static let movieDescriptionText = "Movie Description:\n\n"
+    static let starredMoviesEntityName = "StarredMovies"
 }

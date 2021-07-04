@@ -8,21 +8,23 @@
 //  KeyZim-MVVM
 //
 
-import Foundation
+import UIKit
+import CoreData
 
 protocol PopularMovieListViewModelDelegate: class {
-    func getPopularMovie(with list: [ResultModel])
+    func getPopularMovie(with popularMovieList: [ResultModel])
+    func getStarredMovie(with starredMovieIdList: [Int])
 }
 
 class PopularMovieListViewModel {
     
     private var pageCount = 1
     private var popularMovieList = [ResultModel]()
+    private var starredMovieIdList = [Int]()
     weak var delegate: PopularMovieListViewModelDelegate?
     
     init(delegate: PopularMovieListViewModelDelegate? = nil) {
         self.delegate = delegate
-        getData()
     }
     
     public func getData() {
@@ -59,5 +61,32 @@ class PopularMovieListViewModel {
     
     public func getPageItemCount() -> Int {
         return 20
+    }
+    
+    public func getStarredMovieData() {
+        starredMovieIdList.removeAll()
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            let context = appDelegate.persistentContainer.viewContext
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Constants.starredMoviesEntityName)
+            fetchRequest.returnsObjectsAsFaults = false
+            checkStarredMovie(fetchRequest: fetchRequest, context: context)
+        }
+    }
+    
+    public func checkStarredMovie(fetchRequest: NSFetchRequest<NSFetchRequestResult>, context: NSManagedObjectContext) {
+        do {
+            let results = try context.fetch(fetchRequest)
+            if let results = results as? [NSManagedObject] {
+                if results.count > 0 {
+                    for result in results {
+                        guard let movieId = result.value(forKey: "movieId") as? Int else { return }
+                        starredMovieIdList.append(movieId)
+                    }
+                }
+            }
+            delegate?.getStarredMovie(with: starredMovieIdList)
+        } catch let error {
+            print(error)
+        }
     }
 }

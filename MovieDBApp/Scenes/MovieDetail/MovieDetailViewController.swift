@@ -62,6 +62,7 @@ class MovieDetailViewController: UIViewController {
         return label
     }()
     public var selectedMovieId = 0
+    public var isMovieStarred = false
     private lazy var viewModel = MovieDetailViewModel()
     
     override func viewDidLoad() {
@@ -78,6 +79,10 @@ extension MovieDetailViewController {
         addSubviews()
         setupConstraints()
         viewModel = MovieDetailViewModel(movieId: selectedMovieId, delegate: self)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(imageLiteralResourceName: "star_empty.png"),
+                                                            style: .plain,
+                                                            target: self,
+                                                            action: #selector(rightBarButtonTapped))
     }
     
     private func addSubviews() {
@@ -96,6 +101,10 @@ extension MovieDetailViewController {
             movieImageView.centerXAnchor.constraint(equalTo: scrollableStackView.centerXAnchor),
             movieImageView.heightAnchor.constraint(equalToConstant: 250)
         ])
+    }
+    
+    @objc func rightBarButtonTapped() {
+        viewModel.updateStarredMovieData(with: selectedMovieId)
     }
 }
 

@@ -36,10 +36,16 @@ final class PopularMovieListViewController: UIViewController {
     }()
     private lazy var viewModel = PopularMovieListViewModel()
     private var movieList = [ResultModel]()
+    private var starredMovieIdList = [Int]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getMovieData()
     }
     
     @objc func loadMoreButtonClicked() {
@@ -58,7 +64,12 @@ extension PopularMovieListViewController {
         addSubviews()
         setupConstraints()
         setupCollectionView()
+    }
+    
+    private func getMovieData() {
         viewModel = PopularMovieListViewModel(delegate: self)
+        viewModel.getData()
+        viewModel.getStarredMovieData()
     }
     
     private func addSubviews() {
@@ -95,9 +106,7 @@ extension PopularMovieListViewController: UICollectionViewDelegate, UICollection
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.popularMovieListCollectionViewCellID, for: indexPath) as? PopularMovieListCollectionViewCell {
-            let movieTitle = movieList[indexPath.row].title
-            let movieImageURL = movieList[indexPath.row].posterPath
-            cell.setData(with: movieTitle, imageURL: URL(string: movieImageURL ?? ""), indicator: .grayLarge)
+            cell.setMovieData(popularMovieList: movieList, starredMovieIdList: starredMovieIdList, indexPath: indexPath)
             return cell
         } else {
             return UICollectionViewCell()
@@ -123,11 +132,18 @@ extension PopularMovieListViewController: UICollectionViewDelegate, UICollection
 
 extension PopularMovieListViewController: PopularMovieListViewModelDelegate {
     
-    func getPopularMovie(with list: [ResultModel]) {
-        print("called!")
+    func getPopularMovie(with popularMovieList: [ResultModel]) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-            self.movieList = list
+            self.movieList = popularMovieList
+            self.movieListCollectionView.reloadData()
+        }
+    }
+    
+    func getStarredMovie(with starredMovieIdList: [Int]) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.starredMovieIdList = starredMovieIdList
             self.movieListCollectionView.reloadData()
         }
     }

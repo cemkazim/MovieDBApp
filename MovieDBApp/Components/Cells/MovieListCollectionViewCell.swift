@@ -30,7 +30,8 @@ class PopularMovieListCollectionViewCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
-        imageView.image = UIImage(imageLiteralResourceName: "star.png")
+        imageView.image = UIImage(imageLiteralResourceName: "star_full.png")
+        imageView.isHidden = true
         return imageView
     }()
     
@@ -75,9 +76,13 @@ class PopularMovieListCollectionViewCell: UICollectionViewCell {
 
 extension PopularMovieListCollectionViewCell {
     
-    public func setData(with nameText: String?, imageURL: URL?, indicator: SDWebImageActivityIndicator?) {
-        movieNameLabel.text = nameText
-        movieImageView.sd_imageIndicator = indicator
-        movieImageView.sd_setImage(with: imageURL)
+    public func setMovieData(popularMovieList: [ResultModel], starredMovieIdList: [Int], indexPath: IndexPath) {
+        movieNameLabel.text = popularMovieList[indexPath.row].title
+        movieImageView.sd_imageIndicator = SDWebImageActivityIndicator.grayLarge
+        movieImageView.sd_setImage(with: URL(string: popularMovieList[indexPath.row].posterPath ?? ""))
+        if starredMovieIdList.count > 0 {
+            let isStarred = starredMovieIdList.contains(where: { $0 == popularMovieList[indexPath.row].id })
+            starImageView.isHidden = !isStarred
+        }
     }
 }
