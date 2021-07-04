@@ -10,11 +10,15 @@
 
 import Foundation
 
+// MARK: - PopularMovieListModel
+
 public struct PopularMovieListModel: Decodable {
     
     let page: Int?
     let results: [ResultModel]?
 }
+
+// MARK: - ResultModel
 
 public struct ResultModel: Decodable {
     

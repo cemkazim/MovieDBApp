@@ -9,7 +9,7 @@ import UIKit
 
 class ScrollableStackView: UIView {
     
-    // MARK: - Properties -
+    // MARK: - Properties
     
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -27,6 +27,8 @@ class ScrollableStackView: UIView {
         return stackView
     }()
     
+    // MARK: - Lifecycle
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -35,6 +37,8 @@ class ScrollableStackView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Methods
     
     private func setupView() {
         addSubview(scrollView)

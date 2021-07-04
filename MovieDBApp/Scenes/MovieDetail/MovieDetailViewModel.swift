@@ -11,20 +11,28 @@
 import UIKit
 import CoreData
 
+// MARK: - MovieDetailViewModelDelegate
+
 protocol MovieDetailViewModelDelegate: class {
     func getMovieDetail(with model: MovieDetailModel)
 }
 
 class MovieDetailViewModel {
     
+    // MARK: - Properties
+    
     weak var delegate: MovieDetailViewModelDelegate?
     private var coreDataHelper = CoreDataHelper()
     private var lastStarredMovieIdList = [Int]()
+    
+    // MARK: - Initializers
     
     init(movieId: Int? = nil, delegate: MovieDetailViewModelDelegate? = nil) {
         self.delegate = delegate
         getData(movieId: movieId)
     }
+    
+    // MARK: - Methods
     
     public func getData(movieId: Int?) {
         MovieDetailServiceLayer.shared.getMovieDetail(movieId: movieId ?? 0) { [weak self] (result) in
@@ -51,12 +59,12 @@ class MovieDetailViewModel {
         let entity = coreDataHelper.addData(entityName: Constants.starredMoviesEntityName)
         let newValue = NSManagedObject(entity: entity, insertInto: CoreDataHelper.context)
         newValue.setValue(movieId, forKey: Constants.movieIdKey)
-        saveToCoreData(to: CoreDataHelper.context)
+        saveToCoreData()
     }
     
-    private func saveToCoreData(to context: NSManagedObjectContext) {
+    private func saveToCoreData() {
         do {
-            try context.save()
+            try CoreDataHelper.context.save()
         } catch let error {
             print(error)
         }
@@ -74,12 +82,10 @@ class MovieDetailViewModel {
     private func setStarredMovieIdList(fetchRequest: NSFetchRequest<NSFetchRequestResult>, context: NSManagedObjectContext) {
         do {
             let results = try context.fetch(fetchRequest)
-            if let results = results as? [NSManagedObject] {
-                if results.count > 0 {
-                    for result in results {
-                        guard let movieId = result.value(forKey: Constants.movieIdKey) as? Int else { return }
-                        lastStarredMovieIdList.append(movieId)
-                    }
+            if let starredMovies = results as? [NSManagedObject], starredMovies.count > 0 {
+                for result in starredMovies {
+                    guard let movieId = result.value(forKey: Constants.movieIdKey) as? Int else { return }
+                    lastStarredMovieIdList.append(movieId)
                 }
             }
         } catch let error {
@@ -87,7 +93,7 @@ class MovieDetailViewModel {
         }
     }
     
-    func deleteStarredMovieData() {
+    private func deleteStarredMovieData() {
         let entity = coreDataHelper.deleteData(entityName: Constants.starredMoviesEntityName)
         guard let results = try? CoreDataHelper.context.fetch(entity),
               results.count > 0,
@@ -110,7 +116,6 @@ class MovieDetailViewModel {
     public func updateStarredMovieData(with movieId: Int) {
         getStarredMovieData()
         let isStarred = lastStarredMovieIdList.contains(where: { $0 == movieId })
-        print(isStarred)
         isStarred ? deleteStarredMovieData() : saveStarredMovieData(movieId: movieId, isStarred: isStarred)
     }
 }
