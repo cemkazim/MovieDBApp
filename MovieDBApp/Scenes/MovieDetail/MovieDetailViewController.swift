@@ -83,6 +83,7 @@ extension MovieDetailViewController {
                                                             style: .plain,
                                                             target: self,
                                                             action: #selector(rightBarButtonTapped))
+        updateRightBarButton()
     }
     
     private func addSubviews() {
@@ -103,8 +104,18 @@ extension MovieDetailViewController {
         ])
     }
     
+    private func updateRightBarButton() {
+        isMovieStarred ? changeRightBarButtonImage(with: Constants.starFullImageName) : changeRightBarButtonImage(with: Constants.starEmptyImageName)
+    }
+    
+    private func changeRightBarButtonImage(with imageName: String) {
+        navigationItem.rightBarButtonItem?.image = UIImage(imageLiteralResourceName: imageName)
+    }
+    
     @objc func rightBarButtonTapped() {
         viewModel.updateStarredMovieData(with: selectedMovieId)
+        isMovieStarred.toggle()
+        updateRightBarButton()
     }
 }
 

@@ -125,6 +125,8 @@ extension PopularMovieListViewController: UICollectionViewDelegate, UICollection
         if let movieId = movieList[indexPath.row].id {
             let movieDetailViewController = MovieDetailViewController()
             movieDetailViewController.selectedMovieId = movieId
+            let isStarred = starredMovieIdList.contains(where: { $0 == movieId })
+            movieDetailViewController.isMovieStarred = isStarred
             navigationController?.pushViewController(movieDetailViewController, animated: true)
         }
     }
